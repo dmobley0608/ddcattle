@@ -1,0 +1,71 @@
+.home-container {
+margin-top: 80px;
+}
+
+.center-logo {
+  max-width: 90%;
+  width: 600px;
+  height: auto;
+}
+
+.content-container {
+  margin: auto auto;
+  max-width: 600px;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    animation-delay: 1.75s; /* Delay to match the barn door animation */
+  }
+
+.barn-door-container {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0 ;
+}
+.barn-door{
+    width: 50%;
+    padding:0;
+}
+
+.flip-horizontally {
+  transform: scaleX(-1);
+}
+
+.animate-slide-left {
+  animation: slideLeft 4s forwards;
+  animation-delay: 1s;
+}
+
+.animate-slide-right {
+  animation: slideRight 4s forwards;
+  animation-delay: 1s;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100vw);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100vw);
+  }
+}
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
