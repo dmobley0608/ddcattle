@@ -1,0 +1,1 @@
+import{j as r,C as e}from"./index-DcFBp0Lu.js";const t="",m=({horse:a})=>r.jsx(e.Img,{variant:"top",src:`${t}${a.profileImage}`,alt:a.name,className:"card-image-top",loading:"lazy"});export{m as default};

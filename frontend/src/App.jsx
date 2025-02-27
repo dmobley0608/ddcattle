@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       <Layout>
-        <Container className="mt-3">
+        <Container className="mt-1">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/horses" element={<Horses />} />

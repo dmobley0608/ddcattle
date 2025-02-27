@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import cowTutu from '../assets/tutu_cow.png'
 import cowDanceTutu from '../assets/cow_dance_tutu.png'
-import laughingHorses from '../assets/laughing horses.png'
+import laughingHorses from '../assets/laughing_horses.png'
 export default function Cattle() {
   return (
     <Container fluid className="justify-content-center align-items-center mt-5">

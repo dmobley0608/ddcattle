@@ -44,3 +44,6 @@ seeders/
 
 # VSCode
 .vscode/
+
+#Uploads
+uploads/

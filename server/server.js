@@ -48,7 +48,7 @@ app.use('/api/riding-logs', ridingLogRouter);
 app.use('/api/users', userRouter);
 // app.use('/api/media', mediaRouter); // Uncomment if mediaRouter exists
 
-// Serve the admin index.html file from /qwert
+// Serve the admin index.html file from /qwerty
 app.get('/qwerty/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin', 'index.html'));
 });
@@ -56,7 +56,7 @@ app.get('/qwerty/*', (req, res) => {
 // Serve the frontend for all other users
 app.get(/^\/(?!api|images).*/, (req, res) => {
     console.log(req.method + ' Request Path:', req.path);
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public','client', 'index.html'));
   });
 
 // Ensure the database connection is established before starting the server

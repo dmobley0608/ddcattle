@@ -14,6 +14,11 @@ const Horses = () => {
     navigate(`/qwerty/horses/${id}`);
   };
 
+  const formatDays = (days) => {
+    if (!days && days !== 0) return 'N/A';
+    return days < 0 ? 'YES' : `${Math.round(days)} days`;
+  };
+
   return (
     <div>
       <Table striped bordered hover responsive>
@@ -34,10 +39,10 @@ const Horses = () => {
               <td>{horse.name}</td>
               <td>{horse.age}</td>
               <td>{horse.sex}</td>
-              <td>{horse.needsTrimmed ? 'Yes' : 'No'}</td>
-              <td>{horse.needsWormed ? 'Yes' : 'No'}</td>
-              <td>{horse.needsCoggins ? 'Yes' : 'No'}</td>
-              <td>{horse.needsYearly ? 'Yes' : 'No'}</td>
+              <td>{formatDays(horse.needsTrimmed)}</td>
+              <td>{formatDays(horse.needsWormed)}</td>
+              <td>{formatDays(horse.needsCoggins)}</td>
+              <td>{formatDays(horse.needsYearly)}</td>
             </tr>
           ))}
         </tbody>

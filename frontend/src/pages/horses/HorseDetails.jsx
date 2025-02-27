@@ -1,23 +1,13 @@
 import { useParams, useLocation, useNavigate } from 'react-router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Card, Container, Nav, Tab, Modal, Button, Row, Col, Image } from 'react-bootstrap';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import './HorseDetails.css';
 import { format } from 'date-fns';
+import LoadingImage from '../../components/LoadingImage.jsx';
 
-// Import images
-import inmgU from '../../assets/brand-symbols/U.png';
-import img0 from '../../assets/brand-symbols/0.png';
-import img1 from '../../assets/brand-symbols/1.png';
-import img2 from '../../assets/brand-symbols/2.png';
-import img3 from '../../assets/brand-symbols/3.png';
-import img4 from '../../assets/brand-symbols/4.png';
-import img5 from '../../assets/brand-symbols/5.png';
-import img6 from '../../assets/brand-symbols/6.png';
-import img7 from '../../assets/brand-symbols/7.png';
-import img8 from '../../assets/brand-symbols/8.png';
-import img9 from '../../assets/brand-symbols/9.png';
-
+const HorseBrand = lazy(() => import('./components/HorseBrand.jsx'));
+const GalleryImage = lazy(() => import('./components/GalleryImage.jsx'));
 function HorseDetails() {
   const { name } = useParams();
   const location = useLocation();
@@ -32,9 +22,6 @@ function HorseDetails() {
   const apiUrl = process.env.NODE_ENV === 'development' ? `http://localhost:3002/api/horses/name/${name}` : `/api/horses/name/${name}`;
   const imageUrlPrefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3002' : '';
 
-  const brandImages = [
-    img0, img1, img2, img3, img4, img5, img6, img7, img8, img9
-  ];
 
   useEffect(() => {
     const fetchHorse = async () => {
@@ -86,43 +73,35 @@ function HorseDetails() {
   }
 
   return (
-    <Container>
-      <Card className="mt-3 p-5">
-        <Card.Title>
+    <Container className='m-0 p-0'>
+      <div className="mt-1 p-1">
+        <div>
           <h2>{horse.name}</h2>
-        </Card.Title>
-        <Card.Img variant="top" src={`${imageUrlPrefix}${horse.profileImage}`} alt={horse.name} className="mb-2 horse-image" />
+        </div>
+        <div className='w-100 d-flex  justify-content-center justify-content-md-start' style={{maxWidth:'600px'}}>
+          <LoadingImage variant="top" src={`${imageUrlPrefix}${horse.profileImage}`} alt={horse.name} className=" horse-image" />
+        </div>
+
         {horse.brand && (
-          <div className='d-flex w-100 '>
-            <Image className='me-2' src={inmgU} alt={`Brand digit U`} style={{ width: '30px' }} />
-            <div className='d-flex flex-column me-2'>
-              <Image src={brandImages[horse.brand[0]]} alt={`Brand digit ${horse.brand[0]}`} style={{ width: '15px' }} />
-              <Image src={brandImages[horse.brand[1]]} alt={`Brand digit ${horse.brand[0]}`} style={{ width: '15px' }} />
-            </div>
-            <Row className=' border-bottom border-2 border-dark mx-2 p-0 justify-content-between'>
-              {horse.brand.split('').map((digit, index) => {
-                if (index > 1) {
-                  return (
-                    <Col key={index} xs={1} className="text-center ">
-                      <Image src={brandImages[digit]} alt={`Brand digit ${digit}`} style={{ width: '25px' }} />
-                    </Col>
-                  )
-                }
-              })}
-            </Row>
+          <div className='my-2  d-flex justify-content-center' style={{maxWidth:'300px'}} >
+            <Suspense fallback={<div>Loading...</div>}>
+              <HorseBrand horse={horse} />
+            </Suspense>
           </div>
+
+
         )}
-        <Card.Body>
-          <p>Breed: {horse.breed}</p>
-          {horse.brand && <p>Brand: {horse.brand}</p>}
-          {horse.HMA && <p>HMA: {horse.HMA}</p>}
-          <p>Age: {horse.age}</p>
-          <p>Hands: {horse.height}</p>
-          <p>Weight: {horse.weight}</p>
-          <p>Sex: {horse.sex}</p>
-          {horse.description && <p>Description: {horse.description}</p>}
-        </Card.Body>
-      </Card>
+        <div>
+        {horse.brand && <p><b>Brand</b>: {horse.brand}</p>}
+          <p><b>Breed</b>: {horse.breed}</p>
+          {horse.HMA && <p><b>HMA</b>: {horse.HMA}</p>}
+          <p><b>Age</b>: {horse.age}</p>
+          <p><b>Hands</b>: {horse.height}</p>
+          <p><b>Weight</b>: {horse.weight}</p>
+          <p><b>Sex</b>: {horse.sex}</p>
+          {horse.description && <p><b>Description</b>: <br/>{horse.description}</p>}
+        </div>
+      </div>
       <Tab.Container activeKey={activeTab} onSelect={handleSelect}>
         <Nav variant="tabs" className="mt-3 sticky-tabs">
           <Nav.Item>
@@ -139,13 +118,9 @@ function HorseDetails() {
           <Tab.Pane eventKey="images">
             <div className="image-gallery">
               {images.map((mediaItem, index) => (
-                <img
-                  key={index}
-                  src={`${imageUrlPrefix}${mediaItem.url}`}
-                  alt={`Horse media ${index}`}
-                  className="thumbnail"
-                  onClick={() => handleImageClick(index)}
-                />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <GalleryImage mediaItem={mediaItem} index={index} key={index} imageUrlPrefix={imageUrlPrefix} handleImageClick={handleImageClick} />
+                </Suspense>
               ))}
             </div>
           </Tab.Pane>
