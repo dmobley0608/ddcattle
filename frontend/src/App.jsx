@@ -22,6 +22,7 @@ function App() {
             <Route path="/cattle" element={<Cattle />} />
             <Route path="/about" element={<About />} />
             <Route path="/fun-tools" element={<FunTools />} />
+            <Route path='/*' element={<Home />} />
           </Routes>
         </Container>
       </Layout>

@@ -1,4 +1,5 @@
 import ddLogoMetallic from '../assets/ddlogo_metallic.png';
+import ddcc from '../assets/ddcc.png';
 import barnDoor from '../assets/barn_door.jpg';
 import './Home.css';
 
@@ -16,7 +17,7 @@ function Home() {
         </div>
       </div>
       <div className="content-container animate-fade-in text-center">
-        <img src={ddLogoMetallic} alt="DD Logo Metallic" className="center-logo" />
+        <img src={ddcc} alt="DD Logo Metallic" className="center-logo" />
         <h2>Welcome to DD Cattle</h2>
         <p className='fw-bold'>Where the untamed spirit of wild mustangs majestically moves through our pastures. Nestled amidst the rolling hills of Georgia, where the golden sun kisses the dew-covered grass each morning, lies our little farm. </p>
       </div>

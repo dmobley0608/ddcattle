@@ -1,1 +1,0 @@
-import{j as t,L as l}from"./index-DcFBp0Lu.js";const o=({mediaItem:s,index:a,imageUrlPrefix:r,handleImageClick:e})=>t.jsx(l,{src:`${r}${s.url}`,alt:`Horse media ${a}`,className:"thumbnail",onClick:()=>e(a)});export{o as default};

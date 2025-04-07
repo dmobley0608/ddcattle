@@ -82,7 +82,7 @@ const Horse = sequelize.define('Horse', {
     needsTrimmed: {
         type: DataTypes.VIRTUAL,
         get() {
-            if (!this.on_property || this.deceased) {
+            if (!this.on_property || this.deceased!= null) {
                 return false;
             }
             return this.getDataValue('needsTrimmed');
@@ -91,7 +91,7 @@ const Horse = sequelize.define('Horse', {
     needsWormed: {
         type: DataTypes.VIRTUAL,
         get() {
-            if (!this.on_property || this.deceased) {
+            if (!this.on_property || this.deceased!= null) {
                 return false;
             }
             return this.getDataValue('needsWormed');
@@ -100,7 +100,7 @@ const Horse = sequelize.define('Horse', {
     needsCoggins: {
         type: DataTypes.VIRTUAL,
         get() {
-            if (!this.on_property || this.deceased) {
+            if (!this.on_property || this.deceased || !this.off_property_rides) {
                 return false;
             }
             return this.getDataValue('needsCoggins');
@@ -109,7 +109,7 @@ const Horse = sequelize.define('Horse', {
     needsYearly: {
         type: DataTypes.VIRTUAL,
         get() {
-            if (!this.on_property || this.deceased) {
+            if (!this.on_property || this.deceased != null) {
                 return false;
             }
             return this.getDataValue('needsYearly');
@@ -128,6 +128,8 @@ const Horse = sequelize.define('Horse', {
             if (!Array.isArray(horses)) {
                 horses = [horses];
             }
+
+
             for (const horse of horses) {
                 //Select Horse Profile Image
                 const mediaRecords = await Media.findAll({

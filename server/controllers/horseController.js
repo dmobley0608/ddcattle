@@ -115,12 +115,26 @@ export const getHorseByName = async (req, res) => {
 
 export const updateHorse = async (req, res) => {
     try {
+        console.log(req.body)
         const horse = await Horse.findByPk(req.params.id);
         if (horse) {
             const updatedData = { ...req.body };
-            if (updatedData.deceased === '') {
+
+            // Handle empty or invalid date fields
+            if (updatedData.deceased === '' || updatedData.deceased === 'Invalid date') {
                 updatedData.deceased = null;
             }
+
+            // Handle other possible date fields
+            ['createdAt', 'lastTrimDate', 'lastWormedDate', 'lastCogginsDate', 'lastYearlyDate'].forEach(dateField => {
+                if (updatedData[dateField] === 'Invalid date' || updatedData[dateField] === '' || !isValidDate(updatedData[dateField])) {
+                    updatedData[dateField] = null;
+                }
+            });
+
+            // Let Sequelize handle the updatedAt field automatically
+            delete updatedData.updatedAt;
+
             await horse.update(updatedData);
             res.json(horse);
         } else {
@@ -130,6 +144,16 @@ export const updateHorse = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+// Improved helper function to validate date strings
+function isValidDate(dateString) {
+    if (!dateString) return false;
+    if (typeof dateString === 'boolean') return false;
+
+    // Try to create a valid date
+    const date = new Date(dateString);
+    return date instanceof Date && !isNaN(date.getTime());
+}
 
 export const createHorse = async (req, res) => {
     try {
